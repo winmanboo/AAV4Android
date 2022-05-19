@@ -1,6 +1,7 @@
 package com.winmanboo.aav4android.sample
 
 import android.content.Context
+import android.media.EncoderProfiles
 import android.media.MediaRecorder
 import com.winmanboo.aav4android.utils.LogUtil
 import java.io.File
@@ -55,6 +56,9 @@ class MediaRecorderController(private val context: Context) {
     recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
     recorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS) // .aac
     recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC_ELD)
+    recorder.setAudioChannels(2) // stereo
+    // recorder.setAudioEncodingBitRate(48) // 码流
+    recorder.setAudioSamplingRate(48000) // 48KHz
 
     log.info("init now.")
   }
