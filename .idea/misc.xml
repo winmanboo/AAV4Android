@@ -3,9 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_album_black.xml" value="0.238" />
+        <entry key="app/src/main/res/drawable/ic_arrow_back_black.xml" value="0.238" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.238" />
+        <entry key="app/src/main/res/drawable/ic_pause_circle_black.xml" value="0.238" />
+        <entry key="app/src/main/res/drawable/ic_play_circle_black.xml" value="0.238" />
+        <entry key="app/src/main/res/drawable/ic_stop_circle_black.xml" value="0.238" />
         <entry key="app/src/main/res/layout-sw600dp/activity_audio_record.xml" value="0.17687908496732027" />
         <entry key="app/src/main/res/layout/activity_audio_record.xml" value="0.37417755126953123" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/item_audio_record.xml" value="0.335" />
         <entry key="app/src/main/res/menu/menu_audio_record.xml" value="0.1" />
       </map>
     </option>

@@ -1,7 +1,6 @@
 package com.winmanboo.aav4android.sample
 
 import android.content.Context
-import android.media.EncoderProfiles
 import android.media.MediaRecorder
 import com.winmanboo.aav4android.utils.LogUtil
 import java.io.File
@@ -17,8 +16,12 @@ class MediaRecorderController(private val context: Context) {
 
   private val log: LogUtil = LogUtil()
 
+  val savedPath = context.filesDir.absolutePath + File.separator + SUB_DIR + File.separator
+
   companion object {
     private const val TAG = "MediaRecordController"
+
+    private const val SUB_DIR = "audio"
   }
 
   init {
@@ -65,7 +68,11 @@ class MediaRecorderController(private val context: Context) {
 
   private fun prepare() {
     val fileName = "${System.currentTimeMillis()}_ar.aac"
-    val path = context.filesDir?.absolutePath + File.separator + fileName
+    val file = File(savedPath)
+    if (!file.exists()) {
+      file.mkdir()
+    }
+    val path = savedPath + fileName
     log.info("file path: $path")
     recorder.setOutputFile(path)
     recorder.prepare()

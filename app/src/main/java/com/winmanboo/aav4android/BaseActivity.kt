@@ -1,15 +1,16 @@
 package com.winmanboo.aav4android
 
-import android.content.pm.PackageManager
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
+import com.winmanboo.aav4android.utils.LogUtil
 
 /**
  * @Author wzm
  * @Date 2022/5/19 12:44
  */
 abstract class BaseActivity : AppCompatActivity() {
+  protected val log: LogUtil =
+    LogUtil().apply { initialize(this@BaseActivity::class.java.simpleName) }
+
   /*companion object {
     const val PERMISSION_REQUEST_CODE = 1001
   }

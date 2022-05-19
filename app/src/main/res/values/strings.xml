@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AAV4Android</string>
+
+    <string name="file_size_format">%f.KB</string>
 </resources>

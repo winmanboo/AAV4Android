@@ -8,10 +8,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.winmanboo.aav4android.BaseActivity
 import com.winmanboo.aav4android.R
 import com.winmanboo.aav4android.databinding.ActivityAudioRecordBinding
+import java.io.File
 
 /**
  * @Author wzm
@@ -34,8 +36,11 @@ class AudioRecordActivity : BaseActivity() {
     } else {
       allGranted = true
       controller = MediaRecorderController(this)
+      adapter.submitList(loadFiles())
     }
   }
+
+  private val adapter = SimpleAudioRecordAdapter()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -64,7 +69,24 @@ class AudioRecordActivity : BaseActivity() {
       }
     }
 
-    // binding.rvRecord.adapter
+    binding.rvRecord.adapter = adapter
+    binding.rvRecord.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+  }
+
+  private fun loadFiles(): List<File> {
+    val file = controller?.savedPath?.let { File(it) } ?: return emptyList()
+
+    if (!file.exists()) {
+      log.info("files is empty.")
+      return emptyList()
+    }
+
+    if (!file.isDirectory) {
+      log.warn("saved path is not directory.")
+      return emptyList()
+    }
+
+    return file.listFiles()?.toList() ?: emptyList()
   }
 
   private fun showPermissionDialog() {
@@ -90,6 +112,7 @@ class AudioRecordActivity : BaseActivity() {
     val record = (this as ImageView)
     record.setImageResource(R.drawable.ic_album_black)
     controller?.stop()
+    adapter.submitList(loadFiles())
   }
 
   private fun View.reset() {
@@ -124,7 +147,7 @@ class AudioRecordActivity : BaseActivity() {
   override fun onPause() {
     super.onPause()
 
-    binding.btnRecord.stopRecord()
+    controller?.stop()
   }
 
   override fun onDestroy() {
