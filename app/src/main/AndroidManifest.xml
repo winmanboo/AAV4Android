@@ -26,7 +26,7 @@
       </intent-filter>
     </activity>
     <activity
-      android:name=".sample.AudioRecordActivity"
+      android:name=".media_sample.AudioRecordActivity"
       android:configChanges="orientation"
       android:launchMode="singleTop" />
   </application>

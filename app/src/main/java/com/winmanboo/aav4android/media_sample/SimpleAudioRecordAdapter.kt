@@ -1,4 +1,4 @@
-package com.winmanboo.aav4android.sample
+package com.winmanboo.aav4android.media_sample
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

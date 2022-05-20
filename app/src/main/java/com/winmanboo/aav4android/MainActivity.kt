@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.winmanboo.aav4android.databinding.ActivityMainBinding
-import com.winmanboo.aav4android.sample.AudioRecordActivity
+import com.winmanboo.aav4android.media_sample.AudioRecordActivity
 
 class MainActivity : AppCompatActivity() {
   private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }

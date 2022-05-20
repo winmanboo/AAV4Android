@@ -1,4 +1,4 @@
-package com.winmanboo.aav4android.sample
+package com.winmanboo.aav4android.media_sample
 
 import android.content.Context
 import java.io.File
