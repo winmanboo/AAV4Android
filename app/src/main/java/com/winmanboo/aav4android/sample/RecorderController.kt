@@ -9,7 +9,7 @@ import java.io.File
  * @Author wzm
  * @Date 2022/5/19 13:54
  */
-class MediaRecorderController(private val context: Context) {
+class RecorderController(private val context: Context) {
   private lateinit var recorder: MediaRecorder
   var state: State = State.IDLE
     private set

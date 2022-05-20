@@ -24,7 +24,7 @@ class AudioRecordActivity : BaseActivity() {
     arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
   private val binding by lazy { ActivityAudioRecordBinding.inflate(layoutInflater) }
 
-  private var controller: MediaRecorderController? = null
+  private var controller: RecorderController? = null
 
   private var allGranted: Boolean = false
 
@@ -35,7 +35,7 @@ class AudioRecordActivity : BaseActivity() {
       Toast.makeText(this, "Not all permissions granted", Toast.LENGTH_SHORT).show()
     } else {
       allGranted = true
-      controller = MediaRecorderController(this)
+      controller = RecorderController(this)
       adapter.submitList(loadFiles())
     }
   }
@@ -59,10 +59,10 @@ class AudioRecordActivity : BaseActivity() {
         return@setOnClickListener
       }
       when (controller?.state) {
-        MediaRecorderController.State.PREPARED, MediaRecorderController.State.IDLE -> it.startRecord()
-        MediaRecorderController.State.STARTED -> it.stopRecord()
-        MediaRecorderController.State.STOPPED -> it.startRecord()
-        MediaRecorderController.State.DESTROYED -> {
+        RecorderController.State.PREPARED, RecorderController.State.IDLE -> it.startRecord()
+        RecorderController.State.STARTED -> it.stopRecord()
+        RecorderController.State.STOPPED -> it.startRecord()
+        RecorderController.State.DESTROYED -> {
           it.reset()
           it.startRecord()
         }
