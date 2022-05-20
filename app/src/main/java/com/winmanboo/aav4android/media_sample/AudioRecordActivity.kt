@@ -133,23 +133,10 @@ class AudioRecordActivity : BaseActivity() {
     controller?.reset()
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.menu_audio_record, menu)
-    return true
-  }
-
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       android.R.id.home -> {
         onBackPressed()
-        true
-      }
-      R.id.use_audio_record -> {
-        TODO("use audio record")
-        true
-      }
-      R.id.use_media_record -> {
-        TODO("use media record")
         true
       }
       else -> super.onOptionsItemSelected(item)
