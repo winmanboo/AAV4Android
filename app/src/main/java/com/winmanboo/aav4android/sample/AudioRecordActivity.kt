@@ -25,6 +25,7 @@ class AudioRecordActivity : BaseActivity() {
   private val binding by lazy { ActivityAudioRecordBinding.inflate(layoutInflater) }
 
   private var controller: RecorderController? = null
+  private var playerController: PlayerController? = null
 
   private var allGranted: Boolean = false
 
@@ -36,6 +37,7 @@ class AudioRecordActivity : BaseActivity() {
     } else {
       allGranted = true
       controller = RecorderController(this)
+      playerController = PlayerController(this)
       adapter.submitList(loadFiles())
     }
   }
@@ -69,12 +71,21 @@ class AudioRecordActivity : BaseActivity() {
       }
     }
 
+    adapter.setPlayListener { isChecked, data ->
+      if (isChecked) {
+        // TODO: update check box state
+        playerController?.start(data.absolutePath)
+      } else {
+        playerController?.pause()
+      }
+    }
+
     binding.rvRecord.adapter = adapter
     binding.rvRecord.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
   }
 
   private fun loadFiles(): List<File> {
-    val file = controller?.savedPath?.let { File(it) } ?: return emptyList()
+    val file = File(parentSavedPath)
 
     if (!file.exists()) {
       log.info("files is empty.")
@@ -103,7 +114,8 @@ class AudioRecordActivity : BaseActivity() {
 
     val record = (this as ImageView)
     record.setImageResource(R.drawable.ic_stop_circle_black)
-    controller?.start()
+    val fileName = generateFileName()
+    controller?.start(parentSavedPath + fileName)
   }
 
   private fun View.stopRecord() {
@@ -148,6 +160,13 @@ class AudioRecordActivity : BaseActivity() {
     super.onPause()
 
     controller?.stop()
+    playerController?.stop()
+  }
+
+  override fun onStop() {
+    super.onStop()
+
+    playerController?.release()
   }
 
   override fun onDestroy() {

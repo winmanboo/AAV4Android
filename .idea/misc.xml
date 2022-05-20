@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/ic_pause_circle_black.xml" value="0.238" />
         <entry key="app/src/main/res/drawable/ic_play_circle_black.xml" value="0.238" />
         <entry key="app/src/main/res/drawable/ic_stop_circle_black.xml" value="0.238" />
+        <entry key="app/src/main/res/drawable/sel_player.xml" value="0.179" />
         <entry key="app/src/main/res/layout-sw600dp/activity_audio_record.xml" value="0.17687908496732027" />
         <entry key="app/src/main/res/layout/activity_audio_record.xml" value="0.37417755126953123" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.125" />

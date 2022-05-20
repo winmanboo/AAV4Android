@@ -9,19 +9,15 @@ import java.io.File
  * @Author wzm
  * @Date 2022/5/19 13:54
  */
-class RecorderController(private val context: Context) {
+class RecorderController(context: Context) : MediaController {
   private lateinit var recorder: MediaRecorder
   var state: State = State.IDLE
     private set
 
   private val log: LogUtil = LogUtil()
 
-  val savedPath = context.filesDir.absolutePath + File.separator + SUB_DIR + File.separator
-
   companion object {
     private const val TAG = "MediaRecordController"
-
-    private const val SUB_DIR = "audio"
   }
 
   init {
@@ -35,7 +31,8 @@ class RecorderController(private val context: Context) {
         log.error("media server died error.")
         release()
         init()
-        prepare()
+        val fileName = generateFileName()
+        prepare(context.parentSavedPath + fileName)
       }
     }
     recorder.setOnInfoListener { mr, what, extra ->
@@ -66,29 +63,27 @@ class RecorderController(private val context: Context) {
     log.info("init now.")
   }
 
-  private fun prepare() {
-    val fileName = "${System.currentTimeMillis()}_ar.aac"
-    val file = File(savedPath)
-    if (!file.exists()) {
-      file.mkdir()
+  private fun prepare(filePath: String) {
+    val file = File(filePath)
+    if (file.parentFile == null) {
+      file.parent?.let { File(it) }?.mkdir()
     }
-    val path = savedPath + fileName
-    log.info("file path: $path")
-    recorder.setOutputFile(path)
+    log.info("file path: $filePath")
+    recorder.setOutputFile(filePath)
     recorder.prepare()
     state = State.PREPARED
 
     log.info("prepared now.")
   }
 
-  fun start() {
+  override fun start(filePath: String) {
     if (state == State.STARTED) {
       log.info("recorder has started!")
       return
     }
 
     if (state < State.PREPARED) {
-      prepare()
+      prepare(filePath)
     }
 
     recorder.start()
@@ -96,7 +91,7 @@ class RecorderController(private val context: Context) {
     log.info("start now.")
   }
 
-  fun stop() {
+  override fun stop() {
     when (state) {
       State.IDLE -> log.info("not yet prepare.")
       State.PREPARED -> log.info("not yet start.")
@@ -110,13 +105,13 @@ class RecorderController(private val context: Context) {
     }
   }
 
-  fun reset() {
+  override fun reset() {
     recorder.reset()
     log.info("reset now.")
     init()
   }
 
-  fun release() {
+  override fun release() {
     if (state == State.DESTROYED) {
       log.info("recorder has destroyed!")
       return

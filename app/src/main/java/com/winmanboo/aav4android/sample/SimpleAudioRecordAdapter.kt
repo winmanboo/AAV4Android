@@ -26,6 +26,8 @@ class SimpleAudioRecordAdapter :
     }
   ) {
 
+  private var playerListener: OnPlayerListener? = null
+
   class SimpleAudioRecordVH(private val binding: ItemAudioRecordBinding) :
     RecyclerView.ViewHolder(binding.root) {
     private val format = binding.root.context.getString(R.string.file_size_format)
@@ -41,16 +43,30 @@ class SimpleAudioRecordAdapter :
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleAudioRecordVH {
-    return SimpleAudioRecordVH(
-      ItemAudioRecordBinding.inflate(
-        LayoutInflater.from(parent.context),
-        parent,
-        false
-      )
+    val binding = ItemAudioRecordBinding.inflate(
+      LayoutInflater.from(parent.context),
+      parent,
+      false
     )
+
+    val vh = SimpleAudioRecordVH(binding)
+
+    binding.btnOp.setOnCheckedChangeListener { _, isChecked ->
+      playerListener?.onPlayed(isChecked, getItem(vh.layoutPosition))
+    }
+
+    return vh
   }
 
   override fun onBindViewHolder(holder: SimpleAudioRecordVH, position: Int) {
     holder.bind(getItem(position))
+  }
+
+  fun setPlayListener(onPlayerListener: OnPlayerListener) {
+    this.playerListener = onPlayerListener
+  }
+
+  fun interface OnPlayerListener {
+    fun onPlayed(isChecked: Boolean, data: File)
   }
 }
